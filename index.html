@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#dc2626" />
+  <title>R2P Student OS - Daily, Study, Physical & Exam Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #dc2626;
+      --primary-dark: #991b1b;
+      --primary-light: #fef2f2;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --success-bg: #f0fdf4;
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      overscroll-behavior-y: contain;
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.5;
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #fff;
+      padding: 14px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      border-bottom: 3px solid var(--primary);
+    }
+
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      background: var(--primary);
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.45);
+    }
+
+    .brand-text h1 {
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .brand-text p {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 5px 10px;
+      border-radius: 99px;
+      font-size: 12px;
+      color: #f8fafc;
+    }
+
+    .user-pill img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 8px 13px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:active { transform: scale(0.97); }
+    .btn-sm { padding: 6px 10px; font-size: 12px; border-radius: 8px; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.28);
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    .btn-outline {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .btn-light {
+      background: #f1f5f9;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .btn-danger-soft {
+      background: var(--danger-bg);
+      color: var(--danger);
+      border: 1px solid #fecaca;
+    }
+
+    .container {
+      max-width: 1060px;
+      margin: 18px auto;
+      padding: 0 14px 70px;
+    }
+
+    .tabs-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .tabs-bar { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .tab-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 11px 12px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .stat-card {
+      background: var(--surface);
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-val {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 3px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px;
+      background: #f8fafc;
+      color: var(--text-main);
+    }
+
+    .input-group input:focus, .input-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    .subject-block {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 14px;
+      background: #fcfcfd;
+    }
+
+    .subject-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+
+    .target-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .target-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .target-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 3px;
+    }
+
+    .remain-pill {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .remain-pill.done {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.25s ease;
+    }
+
+    .progress-fill.done {
+      background: var(--success);
+    }
+
+    .counter-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .check-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      background: #f8fafc;
+    }
+
+    .check-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+
+    .check-left input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .timer-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: #0f172a;
+      color: #fff;
+      padding: 16px;
+      border-radius: 14px;
+    }
+
+    .timer-digits {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th {
+      background: #f1f5f9;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .bar-row { margin-bottom: 10px; }
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .bar-bg {
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .bar-val {
+      height: 100%;
+      background: #2563eb;
+      border-radius: 99px;
+    }
+
+    @media print {
+      .app-header, .tabs-bar, .no-print { display: none !important; }
+      .tab-panel { display: block !important; }
+      .card, .stat-card { box-shadow: none; border: 1px solid #cbd5e1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-badge">R2P</div>
+        <div class="brand-text">
+          <h1>Student Life & Performance Hub</h1>
+          <p id="syncStatusText">Supabase Cloud Sync Ready</p>
+        </div>
+      </div>
+      <div class="header-right no-print">
+        <div class="user-pill" id="userBadge">
+          <span id="userDisplayName">অতিথি / লোকাল মোড</span>
+        </div>
+        <button class="btn btn-outline btn-sm" id="googleSignInBtn" onclick="signInWithGoogle()">🔐 Google Sign-In</button>
+        <button class="btn btn-outline btn-sm" id="signOutBtn" style="display:none;" onclick="signOutUser()">Sign Out</button>
+        <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-val" id="topRemainingTargets">0</div>
+        <div class="stat-label">বাকি টার্গেট আইটেম</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color: var(--success);" id="topCompletedTargets">0</div>
+        <div class="stat-label">সম্পন্ন টার্গেট আইটেম</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color: #2563eb;" id="topStudyMinutes">0m</div>
+        <div class="stat-label">মোট স্টাডি সময়</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color: var(--primary);" id="topExamAvg">0%</div>
+        <div class="stat-label">পরীক্ষার গড় পারফরম্যান্স</div>
+      </div>
+    </section>
+
+    <div class="tabs-bar no-print">
+      <button class="tab-btn active" onclick="switchTab('subjects', this)">📚 সাবজেক্ট ও টার্গেট</button>
+      <button class="tab-btn" onclick="switchTab('daily', this)">⏱️ ডেইলি ও স্টাডি</button>
+      <button class="tab-btn" onclick="switchTab('physical', this)">🏃 ফিজিক্যাল ট্রেনিং</button>
+      <button class="tab-btn" onclick="switchTab('exams', this)">📊 এক্সাম ও স্ট্যাটস</button>
+    </div>
+
+    <!-- TAB 1: Subjects & Custom Targets -->
+    <section class="tab-panel active" id="tab-subjects">
+      <div class="card no-print">
+        <div class="card-title">
+          <span>➕ নতুন সাবজেক্ট যোগ করো</span>
+          <span class="tag">Add / Delete Subject</span>
+        </div>
+        <div class="form-row">
+          <div class="input-group">
+            <label>সাবজেক্টের নাম</label>
+            <input type="text" id="newSubjectName" placeholder="যেমন: গণিত, পদার্থবিজ্ঞান, বাংলা ২য়">
+          </div>
+          <div class="input-group" style="display:flex; align-items:flex-end;">
+            <button class="btn btn-primary" style="width:100%;" onclick="addSubject()">+ সাবজেক্ট যোগ করো</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card no-print">
+        <div class="card-title">
+          <span>🎯 স্পেসিফিক টার্গেট যোগ করো (Unit / CQ / MCQ / Model Test)</span>
+          <span class="tag">Live Counter (+1 / -1)</span>
+        </div>
+        <div class="form-row">
+          <div class="input-group">
+            <label>সাবজেক্ট নির্বাচন</label>
+            <select id="targetSubjectSelect"></select>
+          </div>
+          <div class="input-group">
+            <label>ইউনিট / অধ্যায় (ঐচ্ছিক)</label>
+            <input type="text" id="targetUnitInput" placeholder="যেমন: অধ্যায় ৩ বা বোর্ড সেট">
+          </div>
+          <div class="input-group">
+            <label>ধরন (Specification)</label>
+            <select id="targetTypeSelect">
+              <option value="Model Test">Model Test</option>
+              <option value="CQ (সৃজনশীল)">CQ (সৃজনশীল)</option>
+              <option value="MCQ">MCQ</option>
+              <option value="Unit Practice">Unit Practice</option>
+              <option value="Revision">Revision</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="input-group">
+            <label>টার্গেটের শিরোনাম</label>
+            <input type="text" id="targetTitleInput" placeholder="যেমন: মডেল টেস্ট সম্পন্ন করা">
+          </div>
+          <div class="input-group">
+            <label>মোট টার্গেট সংখ্যা</label>
+            <input type="number" id="targetGoalInput" min="1" value="20">
+          </div>
+          <div class="input-group" style="display:flex; align-items:flex-end;">
+            <button class="btn btn-success" style="width:100%;" onclick="addTargetItem()">+ টার্গেট সেট করো</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="subjectsContainer"></div>
+    </section>
+
+    <!-- TAB 2: Daily Routine & Study Timer -->
+    <section class="tab-panel" id="tab-daily">
+      <div class="card">
+        <div class="card-title">
+          <span>⏱️ কন্টিনিউয়াস স্টাডি টাইমার</span>
+          <span class="tag">Auto Log</span>
+        </div>
+        <div class="timer-box">
+          <div>
+            <div style="font-size:12px; color:#94a3b8;">চলমান স্টাডি সেশন</div>
+            <div class="timer-digits" id="studyTimerDisplay">00:00:00</div>
+          </div>
+          <div class="no-print" style="display:flex; gap:8px; flex-wrap:wrap;">
+            <input type="text" id="timerTopicInput" placeholder="কী পড়ছো? (যেমন: গণিত CQ)" style="padding:8px 12px; border-radius:8px; border:none; font-family:inherit;">
+            <button class="btn btn-success" id="timerToggleBtn" onclick="toggleStudyTimer()">▶ শুরু করো</button>
+            <button class="btn btn-outline" onclick="saveTimerSession()">💾 লগে যোগ করো</button>
+          </div>
+        </div>
+
+        <div class="form-row no-print" style="margin-top:14px;">
+          <div class="input-group">
+            <label>সাবজেক্ট / টপিক</label>
+            <input type="text" id="manualStudyTopic" placeholder="যেমন: বাংলা ২য় - প্রবাদ-প্রবচন">
+          </div>
+          <div class="input-group">
+            <label>সময় (মিনিট)</label>
+            <input type="number" id="manualStudyMinutes" min="1" placeholder="যেমন: 45">
+          </div>
+          <div class="input-group" style="display:flex; align-items:flex-end;">
+            <button class="btn btn-primary" style="width:100%;" onclick="addManualStudyLog()">+ স্টাডি লগ যোগ</button>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:12px;">
+          <table>
+            <thead>
+              <tr>
+                <th>তারিখ</th>
+                <th>টপিক / সাবজেক্ট</th>
+                <th>সময়</th>
+                <th class="no-print">অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody id="studyLogsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>✅ ডেইলি রুটিন ও হ্যাবিট চেকলিস্ট</span>
+          <span class="tag" id="habitScoreTag">0 / 0 সম্পন্ন</span>
+        </div>
+        <div class="form-row no-print">
+          <div class="input-group">
+            <label>নতুন ডেইলি রুটিন / হ্যাবিট</label>
+            <input type="text" id="newHabitInput" placeholder="যেমন: ভোর ৬টায় ঘুম থেকে ওঠা">
+          </div>
+          <div class="input-group" style="display:flex; align-items:flex-end;">
+            <button class="btn btn-primary" style="width:100%;" onclick="addHabitItem()">+ রুটিন যোগ করো</button>
+          </div>
+        </div>
+        <div id="habitsListContainer"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Physical Training -->
+    <section class="tab-panel" id="tab-physical">
+      <div class="card">
+        <div class="card-title">
+          <span>🏃 ফিজিক্যাল ট্রেনিং ও ফিটনেস লগ</span>
+          <span class="tag">Fitness & Stamina</span>
+        </div>
+        <div class="form-row no-print">
+          <div class="input-group">
+            <label>ট্রেনিংয়ের ধরন</label>
+            <input type="text" id="physTypeInput" placeholder="যেমন: রানিং, পুশ-আপ, ওয়ার্মআপ">
+          </div>
+          <div class="input-group">
+            <label>পরিমাণ / দূরত্ব / সেট</label>
+            <input type="text" id="physMetricInput" placeholder="যেমন: 2.5 km / 3 সেট">
+          </div>
+          <div class="input-group">
+            <label>সময় (মিনিট)</label>
+            <input type="number" id="physMinInput" min="1" placeholder="যেমন: 30">
+          </div>
+          <div class="input-group" style="display:flex; align-items:flex-end;">
+            <button class="btn btn-success" style="width:100%;" onclick="addPhysicalLog()">+ ট্রেনিং সেভ করো</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>তারিখ</th>
+                <th>ট্রেনিং</th>
+                <th>পরিমাণ/সেট</th>
+                <th>সময়</th>
+                <th class="no-print">অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody id="physicalLogsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: Exams & Statistics -->
+    <section class="tab-panel" id="tab-exams">
+      <div class="card">
+        <div class="card-title">
+          <span>📝 পরীক্ষার তথ্য ও রেজাল্ট যুক্ত করো</span>
+          <span class="tag">Exam Collection</span>
+        </div>
+        <div class="form-row no-print">
+          <div class="input-group">
+            <label>পরীক্ষার নাম</label>
+            <input type="text" id="examNameInput" placeholder="যেমন: মডেল টেস্ট ১">
+          </div>
+          <div class="input-group">
+            <label>সাবজেক্ট</label>
+            <input type="text" id="examSubjectInput" placeholder="যেমন: গণিত">
+          </div>
+          <div class="input-group">
+            <label>প্রাপ্ত নম্বর</label>
+            <input type="number" id="examObtainedInput" step="0.5" placeholder="যেমন: 42">
+          </div>
+          <div class="input-group">
+            <label>পূর্ণমান</label>
+            <input type="number" id="examTotalInput" step="0.5" value="50">
+          </div>
+          <div class="input-group" style="display:flex; align-items:flex-end;">
+            <button class="btn btn-primary" style="width:100%;" onclick="addExamRecord()">+ রেজাল্ট যোগ</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>তারিখ</th>
+                <th>পরীক্ষা</th>
+                <th>সাবজেক্ট</th>
+                <th>নম্বর</th>
+                <th>পার্সেন্টেজ</th>
+                <th class="no-print">অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody id="examRecordsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>📈 সাবজেক্টভিত্তিক পারফরম্যান্স পরিসংখ্যান</span>
+          <span class="tag">Statistics</span>
+        </div>
+        <div id="subjectStatsChart"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = "https://lkngxnybrzpqqisedgwr.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_ZjVvC9FqlkP4orOLLSFfFg_cB2zEHML";
+
+    const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    let currentUser = null;
+
+    const STORAGE_KEY = 'r2p_student_os_supabase_v1';
+
+    const defaultData = {
+      subjects: [
+        {
+          id: 'sub-math',
+          name: 'গণিত',
+          targets: [
+            { id: 't-1', unit: 'টেস্ট পেপার', type: 'Model Test', title: 'মডেল টেস্ট সম্পন্ন করা', goal: 20, done: 1 }
+          ]
+        },
+        {
+          id: 'sub-phy',
+          name: 'পদার্থবিজ্ঞান',
+          targets: [
+            { id: 't-2', unit: 'অধ্যায় ৪', type: 'CQ (সৃজনশীল)', title: 'কাজ, ক্ষমতা ও শক্তি CQ প্র্যাকটিস', goal: 10, done: 3 }
+          ]
+        }
+      ],
+      habits: [
+        { id: 'h-1', title: 'নির্ধারিত সময়ে স্টাডি শুরু করা', done: false },
+        { id: 'h-2', title: 'ফিজিক্যাল ট্রেনিং / ব্যায়াম সম্পন্ন করা', done: false }
+      ],
+      studyLogs: [],
+      physicalLogs: [],
+      examRecords: []
+    };
+
+    let appData = loadLocalData();
+    let timerInterval = null;
+    let elapsedSeconds = 0;
+
+    function loadLocalData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return JSON.parse(JSON.stringify(defaultData));
+    }
+
+    async function saveData(syncCloud = true) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+      renderAll();
+
+      if (syncCloud && currentUser) {
+        try {
+          const { error } = await sbClient
+            .from('student_profiles')
+            .upsert({
+              id: currentUser.id,
+              payload: appData,
+              updated_at: new Date().toISOString()
+            });
+
+          if (!error) {
+            document.getElementById('syncStatusText').textContent = 'Synced with Supabase Cloud';
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+
+    async function signInWithGoogle() {
+      const { error } = await sbClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.href
+        }
+      });
+      if (error) {
+        alert('Google Sign-In সমস্যা: ' + error.message);
+      }
+    }
+
+    async function signOutUser() {
+      await sbClient.auth.signOut();
+    }
+
+    function updateAuthUI(user) {
+      currentUser = user;
+      const badge = document.getElementById('userBadge');
+      const signInBtn = document.getElementById('googleSignInBtn');
+      const signOutBtn = document.getElementById('signOutBtn');
+
+      if (user) {
+        const meta = user.user_metadata || {};
+        const name = meta.full_name || meta.name || user.email || 'Student';
+        const avatar = meta.avatar_url || meta.picture || '';
+        badge.innerHTML = `${avatar ? `<img src="${avatar}" alt="User">` : ''}<span>${name}</span>`;
+        signInBtn.style.display = 'none';
+        signOutBtn.style.display = 'inline-flex';
+        document.getElementById('syncStatusText').textContent = 'Connected to Cloud Account';
+      } else {
+        badge.innerHTML = `<span>অতিথি / লোকাল মোড</span>`;
+        signInBtn.style.display = 'inline-flex';
+        signOutBtn.style.display = 'none';
+        document.getElementById('syncStatusText').textContent = 'Local Mode Active (Sign in to Sync)';
+      }
+    }
+
+    async function loadCloudProfileIfExists(userId) {
+      try {
+        const { data, error } = await sbClient
+          .from('student_profiles')
+          .select('payload')
+          .eq('id', userId)
+          .single();
+
+        if (!error && data && data.payload) {
+          appData = data.payload;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+          renderAll();
+          document.getElementById('syncStatusText').textContent = 'Loaded & Synced from Cloud';
+        } else {
+          await saveData(true);
+        }
+      } catch (e) {
+        await saveData(true);
+      }
+    }
+
+    function switchTab(tabKey, btnEl) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + tabKey).classList.add('active');
+      if (btnEl) btnEl.classList.add('active');
+    }
+
+    function addSubject() {
+      const name = document.getElementById('newSubjectName').value.trim();
+      if (!name) return alert('সাবজেক্টের নাম লেখো।');
+      appData.subjects.push({
+        id: 'sub-' + Date.now(),
+        name,
+        targets: []
+      });
+      document.getElementById('newSubjectName').value = '';
+      saveData();
+    }
+
+    function deleteSubject(subId) {
+      if (!confirm('এই সাবজেক্ট ও এর সব টার্গেট মুছে ফেলতে চাও?')) return;
+      appData.subjects = appData.subjects.filter(s => s.id !== subId);
+      saveData();
+    }
+
+    function addTargetItem() {
+      const subId = document.getElementById('targetSubjectSelect').value;
+      const unit = document.getElementById('targetUnitInput').value.trim();
+      const type = document.getElementById('targetTypeSelect').value;
+      const title = document.getElementById('targetTitleInput').value.trim();
+      const goal = parseInt(document.getElementById('targetGoalInput').value, 10);
+
+      if (!subId) return alert('আগে একটি সাবজেক্ট যোগ করো।');
+      if (!title || isNaN(goal) || goal < 1) return alert('টার্গেটের শিরোনাম ও সঠিক সংখ্যা দাও।');
+
+      const sub = appData.subjects.find(s => s.id === subId);
+      if (!sub) return;
+
+      sub.targets.push({
+        id: 't-' + Date.now(),
+        unit,
+        type,
+        title,
+        goal,
+        done: 0
+      });
+
+      document.getElementById('targetUnitInput').value = '';
+      document.getElementById('targetTitleInput').value = '';
+      document.getElementById('targetGoalInput').value = '20';
+      saveData();
+    }
+
+    function stepTarget(subId, targetId, delta) {
+      const sub = appData.subjects.find(s => s.id === subId);
+      if (!sub) return;
+      const t = sub.targets.find(item => item.id === targetId);
+      if (!t) return;
+      t.done = Math.max(0, Math.min(t.goal, t.done + delta));
+      saveData();
+    }
+
+    function deleteTarget(subId, targetId) {
+      const sub = appData.subjects.find(s => s.id === subId);
+      if (!sub) return;
+      sub.targets = sub.targets.filter(item => item.id !== targetId);
+      saveData();
+    }
+
+    function toggleStudyTimer() {
+      const btn = document.getElementById('timerToggleBtn');
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        btn.textContent = '▶ শুরু করো';
+      } else {
+        btn.textContent = '⏸ পজ করো';
+        timerInterval = setInterval(() => {
+          elapsedSeconds++;
+          updateTimerDisplay();
+        }, 1000);
+      }
+    }
+
+    function updateTimerDisplay() {
+      const h = String(Math.floor(elapsedSeconds / 3600)).padStart(2, '0');
+      const m = String(Math.floor((elapsedSeconds % 3600) / 60)).padStart(2, '0');
+      const s = String(elapsedSeconds % 60).padStart(2, '0');
+      document.getElementById('studyTimerDisplay').textContent = `${h}:${m}:${s}`;
+    }
+
+    function saveTimerSession() {
+      const mins = Math.max(1, Math.round(elapsedSeconds / 60));
+      const topic = document.getElementById('timerTopicInput').value.trim() || 'কন্টিনিউয়াস স্টাডি';
+      if (elapsedSeconds < 5) return alert('আগে টাইমার চালিয়ে কিছু সময় রেকর্ড করো।');
+      appData.studyLogs.unshift({
+        id: 'st-' + Date.now(),
+        date: new Date().toLocaleDateString('bn-BD'),
+        topic,
+        minutes: mins
+      });
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        document.getElementById('timerToggleBtn').textContent = '▶ শুরু করো';
+      }
+      elapsedSeconds = 0;
+      updateTimerDisplay();
+      document.getElementById('timerTopicInput').value = '';
+      saveData();
+    }
+
+    function addManualStudyLog() {
+      const topic = document.getElementById('manualStudyTopic').value.trim();
+      const minutes = parseInt(document.getElementById('manualStudyMinutes').value, 10);
+      if (!topic || isNaN(minutes) || minutes < 1) return alert('সঠিক টপিক ও মিনিট লেখো।');
+      appData.studyLogs.unshift({
+        id: 'st-' + Date.now(),
+        date: new Date().toLocaleDateString('bn-BD'),
+        topic,
+        minutes
+      });
+      document.getElementById('manualStudyTopic').value = '';
+      document.getElementById('manualStudyMinutes').value = '';
+      saveData();
+    }
+
+    function deleteStudyLog(id) {
+      appData.studyLogs = appData.studyLogs.filter(x => x.id !== id);
+      saveData();
+    }
+
+    function addHabitItem() {
+      const title = document.getElementById('newHabitInput').value.trim();
+      if (!title) return alert('রুটিন বা হ্যাবিটের নাম লেখো।');
+      appData.habits.push({ id: 'h-' + Date.now(), title, done: false });
+      document.getElementById('newHabitInput').value = '';
+      saveData();
+    }
+
+    function toggleHabit(id) {
+      const h = appData.habits.find(x => x.id === id);
+      if (h) {
+        h.done = !h.done;
+        saveData();
+      }
+    }
+
+    function addPhysicalLog() {
+      const type = document.getElementById('physTypeInput').value.trim();
+      const metric = document.getElementById('physMetricInput').value.trim() || '-';
+      const minutes = parseInt(document.getElementById('physMinInput').value, 10) || 0;
+      if (!type) return alert('ট্রেনিংয়ের ধরন লেখো।');
+      appData.physicalLogs.unshift({
+        id: 'ph-' + Date.now(),
+        date: new Date().toLocaleDateString('bn-BD'),
+        type,
+        metric,
+        minutes
+      });
+      document.getElementById('physTypeInput').value = '';
+      document.getElementById('physMetricInput').value = '';
+      document.getElementById('physMinInput').value = '';
+      saveData();
+    }
+
+    function deletePhysicalLog(id) {
+      appData.physicalLogs = appData.physicalLogs.filter(x => x.id !== id);
+      saveData();
+    }
+
+    function addExamRecord() {
+      const name = document.getElementById('examNameInput').value.trim();
+      const subject = document.getElementById('examSubjectInput').value.trim() || 'সাধারণ';
+      const obtained = parseFloat(document.getElementById('examObtainedInput').value);
+      const total = parseFloat(document.getElementById('examTotalInput').value);
+      if (!name || isNaN(obtained) || isNaN(total) || total <= 0) {
+        return alert('পরীক্ষার নাম, প্রাপ্ত নম্বর ও পূর্ণমান সঠিকভাবে দাও।');
+      }
+      appData.examRecords.unshift({
+        id: 'ex-' + Date.now(),
+        date: new Date().toLocaleDateString('bn-BD'),
+        name,
+        subject,
+        obtained,
+        total
+      });
+      document.getElementById('examNameInput').value = '';
+      document.getElementById('examObtainedInput').value = '';
+      saveData();
+    }
+
+    function deleteExamRecord(id) {
+      appData.examRecords = appData.examRecords.filter(x => x.id !== id);
+      saveData();
+    }
+
+    function renderAll() {
+      const selectEl = document.getElementById('targetSubjectSelect');
+      selectEl.innerHTML = appData.subjects.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+
+      let totalDone = 0;
+      let totalRemaining = 0;
+
+      const subContainer = document.getElementById('subjectsContainer');
+      if (appData.subjects.length === 0) {
+        subContainer.innerHTML = `<div class="card"><p style="color:var(--text-muted);text-align:center;">কোনো সাবজেক্ট যোগ করা হয়নি। উপরে নতুন সাবজেক্ট যোগ করো।</p></div>`;
+      } else {
+        subContainer.innerHTML = appData.subjects.map(sub => {
+          const targetsHtml = sub.targets.length === 0
+            ? `<p style="font-size:13px;color:var(--text-muted);">এই সাবজেক্টে এখনো কোনো টার্গেট সেট করা হয়নি।</p>`
+            : sub.targets.map(t => {
+                const rem = Math.max(0, t.goal - t.done);
+                const pct = Math.min(100, Math.round((t.done / t.goal) * 100));
+                const isDone = rem === 0;
+                totalDone += t.done;
+                totalRemaining += rem;
+
+                return `
+                  <div class="target-item">
+                    <div class="target-top">
+                      <div>
+                        <strong>${t.title}</strong>
+                        <div class="target-meta">
+                          ধরন: <strong>${t.type}</strong>${t.unit ? ` | ইউনিট: <strong>${t.unit}</strong>` : ''} | সম্পন্ন: <strong>${t.done} / ${t.goal}</strong> (${pct}%)
+                        </div>
+                        <span class="remain-pill ${isDone ? 'done' : ''}">
+                          ${isDone ? '✔ টার্গেট সম্পন্ন হয়েছে!' : `বাকি আছে: ${rem}টি`}
+                        </span>
+                      </div>
+                      <div class="counter-controls no-print">
+                        <button class="btn btn-light btn-sm" onclick="stepTarget('${sub.id}', '${t.id}', -1)">-1</button>
+                        <button class="btn btn-success btn-sm" onclick="stepTarget('${sub.id}', '${t.id}', 1)">+1 সম্পন্ন</button>
+                        <button class="btn btn-danger-soft btn-sm" onclick="deleteTarget('${sub.id}', '${t.id}')">🗑</button>
+                      </div>
+                    </div>
+                    <div class="progress-track">
+                      <div class="progress-fill ${isDone ? 'done' : ''}" style="width:${pct}%;"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('');
+
+          return `
+            <div class="subject-block">
+              <div class="subject-header">
+                <h3 style="font-size:16px;">📘 ${sub.name}</h3>
+                <button class="btn btn-danger-soft btn-sm no-print" onclick="deleteSubject('${sub.id}')">সাবজেক্ট ডিলিট</button>
+              </div>
+              ${targetsHtml}
+            </div>
+          `;
+        }).join('');
+      }
+
+      const doneHabits = appData.habits.filter(h => h.done).length;
+      document.getElementById('habitScoreTag').textContent = `${doneHabits} / ${appData.habits.length} সম্পন্ন`;
+      document.getElementById('habitsListContainer').innerHTML = appData.habits.map(h => `
+        <div class="check-item">
+          <label class="check-left">
+            <input type="checkbox" ${h.done ? 'checked' : ''} onchange="toggleHabit('${h.id}')">
+            <span style="${h.done ? 'text-decoration:line-through;color:var(--text-muted);' : ''}">${h.title}</span>
+          </label>
+          <span class="tag">${h.done ? 'Done' : 'Pending'}</span>
+        </div>
+      `).join('');
+
+      const totalMins = appData.studyLogs.reduce((acc, item) => acc + (item.minutes || 0), 0);
+      document.getElementById('studyLogsBody').innerHTML = appData.studyLogs.length === 0
+        ? `<tr><td colspan="4" style="text-align:center;color:var(--text-muted);">এখনো কোনো স্টাডি লগ নেই।</td></tr>`
+        : appData.studyLogs.map(item => `
+            <tr>
+              <td>${item.date}</td>
+              <td><strong>${item.topic}</strong></td>
+              <td>${item.minutes} মিনিট</td>
+              <td class="no-print"><button class="btn btn-danger-soft btn-sm" onclick="deleteStudyLog('${item.id}')">✕</button></td>
+            </tr>
+          `).join('');
+
+      document.getElementById('physicalLogsBody').innerHTML = appData.physicalLogs.length === 0
+        ? `<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">এখনো কোনো ফিজিক্যাল ট্রেনিং লগ নেই।</td></tr>`
+        : appData.physicalLogs.map(item => `
+            <tr>
+              <td>${item.date}</td>
+              <td><strong>${item.type}</strong></td>
+              <td>${item.metric}</td>
+              <td>${item.minutes} মি.</td>
+              <td class="no-print"><button class="btn btn-danger-soft btn-sm" onclick="deletePhysicalLog('${item.id}')">✕</button></td>
+            </tr>
+          `).join('');
+
+      let pctSum = 0;
+      const bySubject = {};
+      document.getElementById('examRecordsBody').innerHTML = appData.examRecords.length === 0
+        ? `<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">কোনো পরীক্ষার রেকর্ড যোগ করা হয়নি।</td></tr>`
+        : appData.examRecords.map(ex => {
+            const pct = Math.round((ex.obtained / ex.total) * 100);
+            pctSum += pct;
+            if (!bySubject[ex.subject]) bySubject[ex.subject] = [];
+            bySubject[ex.subject].push(pct);
+            return `
+              <tr>
+                <td>${ex.date}</td>
+                <td><strong>${ex.name}</strong></td>
+                <td>${ex.subject}</td>
+                <td>${ex.obtained} / ${ex.total}</td>
+                <td><strong>${pct}%</strong></td>
+                <td class="no-print"><button class="btn btn-danger-soft btn-sm" onclick="deleteExamRecord('${ex.id}')">✕</button></td>
+              </tr>
+            `;
+          }).join('');
+
+      const avgExam = appData.examRecords.length > 0
+        ? Math.round(pctSum / appData.examRecords.length)
+        : 0;
+
+      const subKeys = Object.keys(bySubject);
+      document.getElementById('subjectStatsChart').innerHTML = subKeys.length === 0
+        ? `<p style="color:var(--text-muted);font-size:13px;">পরীক্ষার রেজাল্ট যোগ করলে সাবজেক্টভিত্তিক পরিসংখ্যান দেখা যাবে।</p>`
+        : subKeys.map(sub => {
+            const arr = bySubject[sub];
+            const avg = Math.round(arr.reduce((a, b) => a + b, 0) / arr.length);
+            return `
+              <div class="bar-row">
+                <div class="bar-label"><span>${sub} (${arr.length} পরীক্ষা)</span><span>${avg}%</span></div>
+                <div class="bar-bg"><div class="bar-val" style="width:${avg}%;"></div></div>
+              </div>
+            `;
+          }).join('');
+
+      document.getElementById('topRemainingTargets').textContent = totalRemaining;
+      document.getElementById('topCompletedTargets').textContent = totalDone;
+      document.getElementById('topStudyMinutes').textContent = totalMins + 'm';
+      document.getElementById('topExamAvg').textContent = avgExam + '%';
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      renderAll();
+
+      const { data: { session } } = await sbClient.auth.getSession();
+      if (session && session.user) {
+        updateAuthUI(session.user);
+        await loadCloudProfileIfExists(session.user.id);
+      }
+
+      sbClient.auth.onAuthStateChange(async (_event, session) => {
+        const user = session ? session.user : null;
+        updateAuthUI(user);
+        if (user) {
+          await loadCloudProfileIfExists(user.id);
+        }
+      });
+    });
+  </script>
+</body>
+  </html>
